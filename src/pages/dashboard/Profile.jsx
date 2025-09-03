@@ -18,9 +18,15 @@ export default function Profile() {
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-4">Profile</h1>
-      <p><strong>Name:</strong> {user.name || "John Doe"}</p>
-      <p><strong>Email:</strong> {user.email || "email@example.com"}</p>
-      <p><strong>Role:</strong> {user.role || "Community"}</p>
+      <p>
+        <strong>Name:</strong> {user.name || "John Doe"}
+      </p>
+      <p>
+        <strong>Email:</strong> {user.email || "email@example.com"}
+      </p>
+      <p>
+        <strong>Role:</strong> {user.role || "Community"}
+      </p>
     </div>
   );
 }

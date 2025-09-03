@@ -3,7 +3,11 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import { useUser } from "../context/UserContext";
 
-export default function Layout({ children, showSidebar = true, hideNavbar = false }) {
+export default function Layout({
+  children,
+  showSidebar = true,
+  hideNavbar = false,
+}) {
   const { role } = useUser();
 
   // Always render children, sidebar only if role exists

@@ -6,16 +6,50 @@ import Layout from "./components/Layout";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import IndustryDashboard from "./pages/IndustryDashboard";
-import GovernmentDashboard from "./pages/GovernmentDashboard";
+import OtpVerification from "./pages/OtpVerification";
+
+// Dashboards
+import Dashboard from "./pages/dashboard/DashboardHome";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import IndustryDashboard from "./pages/industry/IndustryDashboard";
+import GovernmentDashboard from "./pages/government/GovernmentDashboard";
+
+// Admin sub-pages
+import CreditIssuance from "./pages/admin/CreditIssuance";
+import UserManagement from "./pages/admin/UserManagement";
+import ProjectApproval from "./pages/admin/ProjectApproval";
+import Reports from "./pages/admin/Reports";
+import AdminProfile from "./pages/admin/Profile";
+import AdminSettings from "./pages/admin/Settings";
+
+// Industry sub-pages
+import Marketplace from "./pages/industry/Marketplace";
+import IndustryReports from "./pages/industry/Reports";
+import Transactions from "./pages/industry/Transactions";
+import Wallet from "./pages/industry/Wallet";
+import IndustrySettings from "./pages/industry/Settings";
+
+// Government sub-pages
+import GovernmentReports from "./pages/government/ReportsAnalytics";
+import AuditProjects from "./pages/government/AuditProjects";
+import Policies from "./pages/government/Policies";
+import GovernmentSettings from "./pages/government/Settings";
+
+// // Admin sub-pages
+// import AddProject from "./pages/dashboard/AddProject";
+// import Certificates from "./pages/dashboard/Certificates";
+// import Leaderboard from "./pages/dashboard/Leaderboard";
+// import MyProject from "./pages/dashboard/MyProject";
+// import Profile from "./pages/dashboard/Profile";
+// import AdminSettings from "./pages/dashboard/Settings";
+
+// General pages
 import AddProject from "./pages/AddProject";
 import Certificates from "./pages/Certificates";
 import Leaderboard from "./pages/Leaderboard";
 import ProjectDetails from "./pages/ProjectDetails";
+
 import RoleBasedRedirect from "./components/RoleBasedRedirect";
-import OtpVerification from "./pages/OtpVerification";
 
 export default function App() {
   return (
@@ -42,13 +76,45 @@ export default function App() {
               </Layout>
             }
           />
-
-          {/* Government dashboard */}
           <Route
-            path="/government"
+            path="/admin/project-approval"
             element={
               <Layout showSidebar={true}>
-                <GovernmentDashboard />
+                <ProjectApproval />
+              </Layout>
+            }
+          />
+          <Route
+            path="/admin/credit-issuance"
+            element={
+              <Layout showSidebar={true}>
+                <CreditIssuance />
+              </Layout>
+            }
+          />
+          <Route
+            path="/admin/user-management"
+            element={
+              <Layout showSidebar={true}>
+                <UserManagement />
+              </Layout>
+            }
+          />
+          <Route
+            path="/admin/reports"
+            element={
+              <Layout showSidebar={true}>
+                <Reports />
+              </Layout>
+            }
+          />
+          <Route path="/admin/profile" element={<AdminProfile />} />
+
+          <Route
+            path="/admin/settings"
+            element={
+              <Layout showSidebar={true}>
+                <AdminSettings />
               </Layout>
             }
           />
@@ -59,6 +125,88 @@ export default function App() {
             element={
               <Layout showSidebar={true}>
                 <IndustryDashboard />
+              </Layout>
+            }
+          />
+          <Route
+            path="/industry/marketplace"
+            element={
+              <Layout showSidebar={true}>
+                <Marketplace />
+              </Layout>
+            }
+          />
+          <Route
+            path="/industry/transactions"
+            element={
+              <Layout showSidebar={true}>
+                <Transactions />
+              </Layout>
+            }
+          />
+          <Route
+            path="/industry/wallet"
+            element={
+              <Layout showSidebar={true}>
+                <Wallet />
+              </Layout>
+            }
+          />
+          <Route
+            path="/industry/reports"
+            element={
+              <Layout showSidebar={true}>
+                <IndustryReports />
+              </Layout>
+            }
+          />
+          <Route
+            path="/industry/settings"
+            element={
+              <Layout showSidebar={true}>
+                <IndustrySettings />
+              </Layout>
+            }
+          />
+
+          {/* Government dashboard */}
+          <Route
+            path="/government"
+            element={
+              <Layout showSidebar={true}>
+                <GovernmentDashboard />
+              </Layout>
+            }
+          />
+          <Route
+            path="/government/reports"
+            element={
+              <Layout showSidebar={true}>
+                <GovernmentReports />
+              </Layout>
+            }
+          />
+          <Route
+            path="/government/audit-projects"
+            element={
+              <Layout showSidebar={true}>
+                <AuditProjects />
+              </Layout>
+            }
+          />
+          <Route
+            path="/government/policies"
+            element={
+              <Layout showSidebar={true}>
+                <Policies />
+              </Layout>
+            }
+          />
+          <Route
+            path="/government/settings"
+            element={
+              <Layout showSidebar={true}>
+                <GovernmentSettings />
               </Layout>
             }
           />
@@ -73,7 +221,7 @@ export default function App() {
             }
           />
 
-          {/* Community/General pages */}
+          {/* General pages */}
           <Route
             path="/add-project"
             element={
@@ -86,10 +234,7 @@ export default function App() {
             path="/my-projects"
             element={
               <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">My Projects</h1>
-                  <p>Coming soon...</p>
-                </div>
+                <Dashboard />
               </Layout>
             }
           />
@@ -110,150 +255,10 @@ export default function App() {
             }
           />
           <Route
-            path="/settings"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Settings</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
             path="/project/:id"
             element={
               <Layout showSidebar={true}>
                 <ProjectDetails />
-              </Layout>
-            }
-          />
-
-          {/* Industry sub-pages */}
-          <Route
-            path="/industry/marketplace"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Marketplace</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/industry/transactions"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Transactions</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/industry/wallet"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Wallet</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/industry/reports"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Industry Reports</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-
-          {/* Admin sub-pages */}
-          <Route
-            path="/admin/project-approval"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Project Approval</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/admin/credit-issuance"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Credit Issuance</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/admin/user-management"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">User Management</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/admin/reports"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Admin Reports</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-
-          {/* Government sub-pages */}
-          <Route
-            path="/government/reports"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">
-                    Government Reports & Analytics
-                  </h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/government/audit-projects"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Audit Projects</h1>
-                  <p>Coming soon...</p>
-                </div>
-              </Layout>
-            }
-          />
-          <Route
-            path="/government/policies"
-            element={
-              <Layout showSidebar={true}>
-                <div className="p-6">
-                  <h1 className="text-2xl font-bold">Policies</h1>
-                  <p>Coming soon...</p>
-                </div>
               </Layout>
             }
           />

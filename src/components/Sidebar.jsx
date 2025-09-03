@@ -11,6 +11,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
+import { mapRole } from "./RoleBasedRedirect";
 
 export default function Sidebar({ role }) {
   const location = useLocation();
@@ -34,7 +35,7 @@ export default function Sidebar({ role }) {
         path: "/leaderboard",
         icon: <BarChart2 size={18} />,
       },
-      { name: "Settings", path: "/settings", icon: <Settings size={18} /> },
+      { name: "Settings", path: "/dashboard/settings", icon: <Settings size={18} /> },
     ],
     industry: [
       { name: "Dashboard", path: "/industry", icon: <Home size={18} /> },
@@ -54,7 +55,11 @@ export default function Sidebar({ role }) {
         path: "/industry/reports",
         icon: <BarChart2 size={18} />,
       },
-      { name: "Settings", path: "/settings", icon: <Settings size={18} /> },
+      {
+        name: "Settings",
+        path: "/industry/settings",
+        icon: <Settings size={18} />,
+      },
     ],
     admin: [
       { name: "Dashboard", path: "/admin", icon: <Home size={18} /> },
@@ -78,7 +83,16 @@ export default function Sidebar({ role }) {
         path: "/admin/reports",
         icon: <BarChart2 size={18} />,
       },
-      { name: "Settings", path: "/settings", icon: <Settings size={18} /> },
+      {
+        name: "Profile",
+        path: "/admin/profile",
+        icon: <BarChart2 size={18} />,
+      },
+      {
+        name: "Settings",
+        path: "/admin/settings",
+        icon: <Settings size={18} />,
+      },
     ],
     government: [
       { name: "Dashboard", path: "/government", icon: <Home size={18} /> },
@@ -97,11 +111,17 @@ export default function Sidebar({ role }) {
         path: "/government/policies",
         icon: <Settings size={18} />,
       },
-      { name: "Settings", path: "/settings", icon: <Settings size={18} /> },
+      {
+        name: "Settings",
+        path: "/government/settings",
+        icon: <Settings size={18} />,
+      },
     ],
   };
 
-  const roleLinks = links[role] || links["community"]; // fallback to community links
+  // Use centralized role mapping
+  const effectiveRole = mapRole(role);
+  const roleLinks = links[effectiveRole] || links["community"];
 
   return (
     <div className="w-64 min-h-screen bg-white shadow-md flex flex-col">

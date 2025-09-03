@@ -1,8 +1,8 @@
-// src/pages/Register.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Building2, Factory, ShieldCheck } from "lucide-react";
 import { useUser } from "../context/UserContext";
+import { useNotification } from "../context/NotificationContext";
 
 export default function Register() {
   const [mode, setMode] = useState("email");
@@ -14,21 +14,24 @@ export default function Register() {
   const [role, setRole] = useState("");
 
   const navigate = useNavigate();
-  const { setRole: setUserRole } = useUser(); // context
+  const { setRole: setUserRole } = useUser();
+  const { addNotification } = useNotification();
 
   const redirectToDashboard = (role) => {
+    // Redirect **directly to dashboard folders**
     switch (role) {
       case "community":
-        navigate("/community");
+        navigate("/community"); // Community dashboard folder
         break;
       case "industry":
-        navigate("/industry");
+        navigate("/industry"); // Industry dashboard folder
         break;
       case "admin":
-        navigate("/admin");
+        navigate("/admin"); // Admin dashboard folder
         break;
       case "government":
-        navigate("/government");
+      case "ngo": // make sure "ngo" role maps to government
+        navigate("/government"); // Government dashboard folder
         break;
       default:
         navigate("/");
@@ -37,8 +40,7 @@ export default function Register() {
 
   const handleRegister = (e) => {
     e.preventDefault();
-
-    if (!role) return alert("⚠️ Please select your role");
+    if (!role) return addNotification("⚠️ Please select your role", "error");
 
     // Store role in context & localStorage
     setUserRole(role);
@@ -46,28 +48,28 @@ export default function Register() {
 
     if (mode === "email") {
       if (!name || !email || !password)
-        return alert("Please fill all fields ❌");
+        return addNotification("Please fill all fields ❌", "error");
     } else {
       if (!name || !phone || !otp)
-        return alert("Please enter phone number and OTP ❌");
+        return addNotification("Please enter phone number and OTP ❌", "error");
     }
 
-    alert(`Registration successful ✅ as ${role}`);
-    redirectToDashboard(role);
+    addNotification(`Registration successful ✅ as ${role}`, "success");
+    redirectToDashboard(role); // ✅ direct folder redirect
   };
 
   const handleGoogleRegister = () => {
-    if (!role) return alert("⚠️ Please select your role");
+    if (!role) return addNotification("⚠️ Please select your role", "error");
     setUserRole(role);
     localStorage.setItem("role", role);
-    alert(`Google Sign-up clicked ✅ as ${role}`);
+    addNotification(`Google Sign-up clicked ✅ as ${role}`, "success");
     redirectToDashboard(role);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-green-50 px-4">
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-5xl flex overflow-hidden">
-        {/* Left Side */}
+        {/* Left Side Form */}
         <div className="w-full md:w-1/2 p-8">
           <h2 className="text-3xl font-bold text-green-700 mb-2">
             Create an Account ✨
@@ -113,7 +115,6 @@ export default function Register() {
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none"
               required
             />
-
             {mode === "email" ? (
               <>
                 <input
@@ -155,7 +156,7 @@ export default function Register() {
                   <button
                     type="button"
                     className="px-4 py-3 rounded-lg bg-blue-600 text-white font-medium shadow hover:scale-105 transition"
-                    onClick={() => alert("OTP sent ✅")}
+                    onClick={() => addNotification("OTP sent ✅", "success")}
                   >
                     Send OTP
                   </button>
@@ -185,7 +186,7 @@ export default function Register() {
                     : "border-gray-300 text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                <Building2 size={18} /> NGO
+                <Building2 size={18} /> Government
               </button>
               <button
                 type="button"
@@ -225,7 +226,6 @@ export default function Register() {
             <span className="px-3 text-gray-500 text-sm">or</span>
             <div className="flex-grow h-px bg-gray-300"></div>
           </div>
-
           <button
             onClick={handleGoogleRegister}
             className="w-full flex items-center justify-center py-3 rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50 transition"
@@ -261,14 +261,6 @@ export default function Register() {
             plantations, NGOs verify & monitor, industries buy carbon credits,
             and admins keep everything compliant.
           </p>
-          <ul className="text-gray-700 space-y-2 text-sm">
-            <li>
-              • Community: Upload plantation details with photos & location
-            </li>
-            <li>• NGO: Verify submissions, monitor growth</li>
-            <li>• Industry: Buy verified carbon credits</li>
-            <li>• Admin: Ensure compliance & manage the system</li>
-          </ul>
         </div>
       </div>
     </div>

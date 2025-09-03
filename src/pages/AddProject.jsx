@@ -8,9 +8,10 @@ import {
   PolarAngleAxis,
   ResponsiveContainer,
 } from "recharts";
+import { useNotification } from "../context/NotificationContext";
 
 const COEFS = {
-  Mangroves: 15,     // tCO₂/ha/year (mock)
+  Mangroves: 15, // tCO₂/ha/year (mock)
   Seagrass: 7,
   Wetlands: 5,
   Agroforestry: 10,
@@ -75,6 +76,8 @@ export default function AddProject() {
   const canNextFrom1 =
     name.trim().length > 2 && location.trim() && parseFloat(sizeHa) > 0;
 
+  const { addNotification } = useNotification();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const project = {
@@ -92,7 +95,7 @@ export default function AddProject() {
       txId: null,
     };
     addProject(project);
-    alert("Project submitted! Status set to Pending MRV.");
+    addNotification("Project submitted! Status set to Pending MRV.", "success");
     navigate("/dashboard");
   };
 
@@ -108,7 +111,8 @@ export default function AddProject() {
           Add New Project
         </h1>
         <p className="text-gray-600 mt-2">
-          Provide your project details, upload evidence, and preview AI estimates.
+          Provide your project details, upload evidence, and preview AI
+          estimates.
         </p>
       </div>
 
@@ -222,7 +226,11 @@ export default function AddProject() {
                   onClick={next}
                   disabled={!canNextFrom1}
                   className={`px-5 py-2 rounded-xl text-white shadow transition
-                    ${canNextFrom1 ? "bg-[#1D4ED8] hover:brightness-110" : "bg-gray-400 cursor-not-allowed"}`}
+                    ${
+                      canNextFrom1
+                        ? "bg-[#1D4ED8] hover:brightness-110"
+                        : "bg-gray-400 cursor-not-allowed"
+                    }`}
                 >
                   Next: Files
                 </button>
@@ -266,7 +274,10 @@ export default function AddProject() {
               {!!files.length && (
                 <ul className="divide-y rounded-xl border">
                   {files.map((f, i) => (
-                    <li key={`${f.name}-${i}`} className="flex items-center justify-between px-4 py-3">
+                    <li
+                      key={`${f.name}-${i}`}
+                      className="flex items-center justify-between px-4 py-3"
+                    >
                       <div className="truncate">
                         <span className="font-medium">{f.name}</span>
                         <span className="text-gray-500 text-xs ml-2">
@@ -325,7 +336,11 @@ export default function AddProject() {
                         startAngle={180}
                         endAngle={0}
                         data={[
-                          { name: "Predicted", value: gaugePct, fill: "#16A34A" },
+                          {
+                            name: "Predicted",
+                            value: gaugePct,
+                            fill: "#16A34A",
+                          },
                         ]}
                       >
                         <PolarAngleAxis
@@ -380,7 +395,8 @@ export default function AddProject() {
                     </span>
                   </div>
                   <p className="text-sm text-gray-500">
-                    *Estimator is a mock for prototyping. Actual MRV/ML can be integrated later.
+                    *Estimator is a mock for prototyping. Actual MRV/ML can be
+                    integrated later.
                   </p>
                 </div>
               </div>

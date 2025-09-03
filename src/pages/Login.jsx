@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Users, Building2, Factory, ShieldCheck } from "lucide-react"; // icons
 import { useUser } from "../context/UserContext";
+import { useNotification } from "../context/NotificationContext";
 
 export default function Login() {
   const [mode, setMode] = useState("email"); // "email" | "phone"
@@ -13,31 +14,32 @@ export default function Login() {
 
   const navigate = useNavigate();
   const { setRole } = useUser();
+  const { addNotification } = useNotification();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     if (mode === "email") {
       if (!(email && password)) {
-        alert("Please enter email and password ❌");
+        addNotification("Please enter email and password ❌", "error");
         return;
       }
     } else {
       if (!(phone && otp)) {
-        alert("Please enter phone number and OTP ❌");
+        addNotification("Please enter phone number and OTP ❌", "error");
         return;
       }
     }
 
     if (!selectedRole) {
-      alert("⚠️ Please select your role before login");
+      addNotification("⚠️ Please select your role before login", "error");
       return;
     }
 
     localStorage.setItem("role", selectedRole);
     setRole(selectedRole);
 
-    alert("Login successful ✅");
+    addNotification("Login successful ✅", "success");
 
     if (selectedRole === "admin") {
       navigate("/admin");
@@ -52,13 +54,16 @@ export default function Login() {
 
   const handleGoogleLogin = () => {
     if (!selectedRole) {
-      alert("⚠️ Please select your role before Google login");
+      addNotification(
+        "⚠️ Please select your role before Google login",
+        "error"
+      );
       return;
     }
 
     localStorage.setItem("role", selectedRole);
     setRole(selectedRole);
-    alert("Google login clicked ✅");
+    addNotification("Google login clicked ✅", "success");
 
     if (selectedRole === "admin") {
       navigate("/admin");
