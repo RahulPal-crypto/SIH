@@ -1,6 +1,6 @@
 // src/pages/AdminDashboard.jsx
 import { useState, useEffect } from "react";
-import { getProjects, updateProjectStatus } from "./store/project";
+import { getProjects, updateProjectStatus } from "../store/projects";
 
 export default function AdminDashboard() {
   const [projects, setProjects] = useState([]);
